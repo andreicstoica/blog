@@ -1,0 +1,94 @@
+---
+title: "Decisions (Week 1)"
+publishedAt: "2025-06-07"
+summary: "Reflections on my first week in the Fractal Bootcamp, and some themes I've noticed about programming."
+---
+
+# Learnings
+
+## Wins & Blockers
+
+### Day 1
+
+_Blockers_ - I am stuck trying to implement howler, and had some weird font issues with tailwind (it wasn’t applying inline using tailwind syntax?)
+_Wins_ - I think I made good progress on the core functionality of the assignment that let me explore some fun styling! 🙂
+
+### Day 2
+
+_Blockers_ - images and their containers were a big source of frustration today! i also had a hard time getting state passed around between different components in my head at the beginning of the day
+_Wins_ - i think i have gotten a much better handle of tailwind - i finished the post component WAY faster than anything before it!
+
+### Day 3
+
+_Blockers_ - still working on making my tailwind/styling cleaner. slowly getting there, but the idea/image i have in my head is still FAR away from what i can make Dx _Wins_ - i think i have a good basic understanding of how the various ‘chunks’ (i.e. client, server, apis in between) of react apps work! made speedy progress, especially connecting to supabase
+
+### Day 4
+
+_Blockers_ - i was initially really confused that react router’s loader function returns an object with a key, and that that key name needs to be the same where you use the eventual data in the value of the object! i had them named slightly differently at first (onGoing games, games) and was lost for a while
+_Wins_ - getting websockets to work was really fun! i think the web is fun and seeing stuff happen auto-magically was a fun dopamine hit. react-springs is also quite cool pretty nice to setup once i figured it out tbh
+
+### Day 5
+
+_Blockers_ - deployment was a little hard to get my head around, but i understand the benefits of docker. is there really no better way to keep track of dev and prod environment variables besides commenting out URLs manually in .env files? maybe we will learn this soon 🙂
+_Wins_ - LFG ITS ALIVE and slightly slow: [tic tac toe game!](https://tac-tac-toe.vercel.app/) sending the link and getting clicks from friends and family across the internet hit like crack. i’ve also enjoyed styling my game to look much nicer this morning! 🙂 i also implemented minimax for ai auto assist (button appears 5 seconds after making a move)
+
+### Day 6
+
+_Blockers_ - state was a little confusing for a few hours today, i think it just needed to take a break and come back at it with fresh eyes. ready to get some sleep, have had a few early mornings this week…
+_Wins_ - improved a few bugs i noticed when sharing the game publicly yesterday!
+
+## Learned Technologies
+
+- React single page app: a basic game (I picked Tic Tac Toe)
+- Styling: TailwindCSS, making pixel-perfect components from Figma designs
+- Local server: made my game run locally using vite-express
+- Database: app references a Postgresql database of games hosted on Supabase
+- Websockets: auto updating game state for live online multiplayer games
+- Minimax algorithm: Best next move (minimax algo) autocomplete button built into game
+- Deployment: backend via Dockerfile to Render, frontend via Vercel. [link here](https://tac-tac-toe.vercel.app/)
+
+# Reflections
+
+One is constantly making decisions when programming. From the outside working with engineers, this seemed obvious: of course, from my perspective as a Product Manager, an engineer would need to pick the right tools for the job! But it turns out that's just the starting point. At every step after that, a programmer is constantly making decisions. How should my app be structured? How should this component manage state? Oh, this function needs to do more logic work... maybe it should be split into its own function. Since I'm writing in Typescript, decisions about types are constantly swirling around my mind! Referencing [Grant Slatton's](https://grantslatton.com/) ['Algorithms we develop software by'](https://grantslatton.com/software-pathfinding) it turns out there are many turns on the path to the solution.
+
+At the end of this first week, we were tasked with creating a personal blog NextJS website to reflect on for the rest of the program. I asked why we should maintain our infrastructure instead of just using Substack. [Andrew](https://substack.com/@andrewjrose) (the lead instructor and co-founder of the bootcamp and space it runs out of) had a simple answer I have heard before: _When you build software you start to see other programmers' decisions everywhere. Why is this button all the way over here? Why can I not change this thing?_ Sometimes it is better to just make your own decisions. Turns out we are also going to be using NextJS next week, so it is a nice easy way to get familiar with the technology 🤓 Here is the link, I'll work on styling it nicer, and will eventually be synced with this blog and part of my personal site.
+
+I have previously learned to think this way before: in high school, when I was learning programming and robotics. Sadly, I have since forgotten this lesson and largely abandoned this very sequential way of thinking. I think re-learning this perspective has helped me better understand the engineers in my life. When every small action is a decision with side effects, it follows that those decisions would be reasoned and deliberate. This perspective can be applied to much outside of programming.
+
+# How I'm Doing
+
+## 1. How I'm Feeling
+
+- overall, feeling good. a bit tired after having some early mornings (Lily's race, and tried to exercise one morning)
+- it will be hard managing relationships, my own sanity, and my own desire to learn as much as i can
+
+## 2. Personal Growth & Learning
+
+- i think i have started to find a comfortable amount of ego in the bootcamp (i know nothing, but i know enough to ask questions and be able to learn)
+- i have been good about essentially being in a school environment re: meeting people again lol
+
+## 3. Standout Moments
+
+- seeing websockets work for the first time
+- sending the working deployed link to work
+
+## 4. Biggest Challenge & How I Handled It
+
+- staying focused for hours, pushing through answers without just auto-amputating thinking to AI (even when in teacher mode)
+
+## 5. Connections & Collaborations
+
+- have tried to setup working relationship with those that sit near me
+
+## 6. Habits & Routines
+
+- biking has been a really nice outdoor slight workout break before/after class when it is nice enough to do so
+- having a nice sized breakfast, a few snacks throughout the day, and a healthy amount of beverages besides water (electrolyte drinks, coffee, etc.) has kept me fueled and not too hungry for dinner by the time i get home ~8!
+
+## 7. Surprises
+
+- i have been able to focus pretty well so far! i am surprised by this, because usually when things would get hard in school i would fall into distractions (especially in subjects i didn't like/didn't feel confident in, like technical CS courses). however, the pace of feedback, being able to get unstuck (with AI, and if that doesn't work, instructors who are there to work with you!) has helped keep me focused and eager to keep going. the long hours fly by much faster than work did a few months ago...
+
+## 8. Focus for Next Week
+
+- making sure i don't over-rly on the AI, and making sure i understand the 101 level foundations of React and web networking we learned this week
