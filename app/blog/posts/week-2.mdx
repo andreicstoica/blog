@@ -1,0 +1,53 @@
+---
+title: "English as Abstraction (Week 2)"
+publishedAt: "2025-06-13"
+summary: On why software engineers love philosophy and literature - as it relates to programming languages
+---
+
+# Learnings
+
+## Wins & Blockers
+
+### Day 1
+
+*Wins -* locally, i have a working version with chats saved to supabase. i think i got a vague grasp of how useChat works in next
+
+*Blockers* - can’t get it to deploy bc of a random tRPC type errors i can’t fix with ignores, failing the vercel deploy lol (which i don’t think i’m using, but removing it from various files across the app seems counterproductive if we’re implementing it wednesday?).
+
+a little disappointed we just kind of got thrown into both next **_and_** making an ai chat app. i think it would have been very helpful to learn more about nextJS besides a generic dashboard site. i was confused when we used t3 stack which had completely different functionality (tRPC, etc.) than the example we learned from in the dashboard nextjs app router example… that on top of no lecture or guidance beyond a list of nextJS blogs/example walkthroughs didn’t feel great.
+
+was hoping to be able to create a multiplayer chat app by the EOW that i could maybe submit to the t3 chat hackathon, don't know if that is possible anymore lol. was barely able to work on styling etc., and am feeling a little daunted by the road ahead. still need to still iron out bugs between retry message/stop message and the DB, and add auth/users/try different models/etc.
+
+### Day 2
+
+*Wins -* shadcn is dope af! file upload is also really cool! wonder which models/UIs are most popular at fractal 🤔
+*Blockers* - google’s cloud → vertex → gemini structure was pretty confusing to figure out, vertex was not working, but using just the plain gemini (gemini studio?) worked… their cloud docs reference vertex studio first, while internet searches return gemini studio lol
+
+### Day 3
+
+_Wins -_ i like working with elysia! learning about cookies in this way made more sense than it did in the past
+_Blockers_ - ran into issues towards the end when i started trying to group routes into protectedRoutes Elysia object after ‘authenticating’ —> Gemini got confused and i think drove me down an incorrect path with its advice. will revisit tomorrow morning.
+
+### Day 4
+
+*Wins -* got auth working on my chat app! think it is slowly making sense (especially the many different ways you can handle it). i thought the video + docs were easy to follow and that made small progress feel good. deployed successfully!
+*Blockers* - a few days is not enough time to feel confident in the intricacies of auth. trying to be patient with being with myself!!!
+
+### Day 5
+
+*Wins -* got protection working for chats via tRPC! Also had to add some db changes to enable that (using drizzle kit to change the db was less spooky td)
+*Blockers* - some weird scroll overflow bugs were hard to squash (when i had more chats than my screen height, the container kept growing, scrolling the page down.
+
+## Learned Technologies
+
+- NextJS (with App Router)
+- NextJS AI SDK
+- ElysiaJS
+- OpenAI & Google Gemini APIs
+- Better Auth
+
+# Reflections
+
+Someone asked about the differences between systems software engineers and architecture software engineers, since the names could imply (referencing the physical world) that the roles have similar scopes. Eugene, one of our co-instructors, answered with: "They have no overlap." He went on to explain that a lot of software engineering job terms - like 'Staff' - but also in the languages themselves - like 'interface' in TypeScript - are generally arbitrarily chosen. This is evident everywhere in languages I have come across. Abstract concepts are attempted to be represented by physical terms in as familiar a way as possible, but so are moves in the code. For example, a function in TypeScript can be defined as functionName = () => { //logic }. The => indicates the function does everything in the curly brackets.
+
+It is therefore no surprise to me that software engineers have a bend towards literature and philosophy (especially metaphysics). I have read about how programming languages are written in English for humans to better understand how the electrons are moving on the hardware, and Andrew (our main instructor) repeated this often in our first week as well. However, coming across so many different web frameworks and technologies these last two weeks, I have a new broader view at just how wide this horizon is.
