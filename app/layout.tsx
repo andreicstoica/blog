@@ -11,15 +11,15 @@ import { baseUrl } from "./sitemap";
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Andrei's Portfolio",
-    template: "%'s Portfolio",
+    default: "Andrei's Blog",
+    template: "Andrei's Blog",
   },
-  description: "This is my portfolio.",
+  description: "This is my blog.",
   openGraph: {
-    title: "Andrei Stoica Portfolio",
-    description: "Andrei Stoica's is my portfolio.",
+    title: "Andrei Stoica blog",
+    description: "Andrei Stoica's is my blog.",
     url: baseUrl,
-    siteName: "Andrei Stoica's portfolio",
+    siteName: "Andrei Stoica's blog",
     locale: "en_US",
     type: "website",
   },
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
 };
 
-const cx = (...classes) => classes.filter(Boolean).join(" ");
+const cx = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
 export default function RootLayout({
   children,
@@ -49,7 +49,7 @@ export default function RootLayout({
       className={cx(
         "text-black bg-white dark:text-white dark:bg-black",
         GeistSans.variable,
-        GeistMono.variable
+        GeistMono.variable,
       )}
     >
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">

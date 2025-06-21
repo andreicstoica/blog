@@ -1,0 +1,94 @@
+---
+title: "Product Like an AI Engineer (Week 3)"
+publishedAt: "2025-06-21"
+summary: "Reflecting in my first portfolio project, Vercel's AI SDK, and my future career"
+---
+# Learnings
+## Wins & Blockers
+### Day 1
+_Wins_ - have a clear plan for tomorrow! feel like i am in a good place to finish a barebones prototype by tomorrow evening. i want to keep things simple to have time to style it really nicely and work on flows later this week!
+
+_Blockers_ - was definitely overwhelmed with the list of todos at the beginning of the day. took me a solid 2 hours to pick a project small enough in scope that i thought was cool, and then had to roll back some work as i tried to set up too much too fast to start.
+### Day 2
+_Wins_ - felt like i struggled through some of the infra work in the beginning of the day. slowly getting to a more somewhat useable product.
+
+_Blockers_ - bit off more than i could chew at once again this morning which sapped a lot of my energy. still getting a little caught up in what i have in my head and what i can actually accomplish, especially design wise :(. hopefully i can wrap in some more ai-sdk features tomorrow, and also write some tests! sorry paris, forgot to add them
+### Day 3
+_Wins_ - deployed! also caught up sone of the ‘lessons’ like testing today. didn’t set up testing all over the app, but was cool learning to use cypress! was not expecting another app to open up with an electron browser???
+
+_Blockers_ - motion libraries are a whole different beast!!! need to fix some auth details tomorrow (have noticed, esp in the deployed version)
+### Day 4
+_Wins_ - pushed through and got over the hurdle. more animations and components, and WAY fewer bugs re: chats
+
+_Blockers_ - had a tough one today, felt like i had 1 brain cell for most of the day. i really need to practice breaking goals down into smaller steps re: code architecture.
+### Day 5
+_Wins -_ Deployed app is much more polished than yesterday (caught lots of bugs and a race condition I learned!). swapped some UI elements around and generally have a pretty screen size accommodating app. enjoyed trying a new IDE (Zed) in earnest today - it feels very fast!
+
+_Blockers_ - need to look deeper into why the initial plan generation is so slow. not much besides that
+### Day 6
+_Wins_ - enjoyed learning from everyone's demos!
+
+_Blockers_ - not much today, relaxing day to reflect on the week.
+## Learned Technologies
+- Sentry
+- Vercel Analytics
+- tRPC
+- Better Auth (including Google account auth)
+- Vercel AI Chat SDK
+	- Tool Calling
+	- Object Generation
+	- Text Generation and Streaming
+- Framer Motion
+- shadcn components
+- Responsive design
+# Reflections
+## Product Work (as a software engineer)
+Working AI products cleanly into existing product flows was a challenge technologically - at least with my last-gen minded design brain. For example, I wanted someone to define a *focus* for their practice session before I brought them to the actual LLM chat interface. Ideally, this focus would be pre-populated with the coach's practice plan as a response, and formatted to look like a special UI element, since it is a *practice plan* and not a normal AI message! Getting this to work with my still growing understand of the Vercel AI SDK was a challenge.
+
+First, I learned I needed to reload the page to get the tool call responsible for generating the practice session to recognize a message had been inserted with the user's intended focus. To get this reload to happen without other side effects in a NextJS React app was difficult -- just reloading simply would cause user messages to send twice, or appear twice in the database, or cause the AI to re-send the practice plan inside of a normal message.
+
+Still a beginner, I was forced to dive deeper into the inner workings of React's render logic and came out a better engineer for it. The assigned readings of the week also paired nicely with the 'on-the-job' lessons. Vercel's own [Common Mistakes with the NextJS App Router](https://vercel.com/blog/common-mistakes-with-the-next-js-app-router-and-how-to-fix-them) helped dispel misunderstandings, as did Dan Abramov's [One Roundtrip Per Navigation](https://overreacted.io/one-roundtrip-per-navigation/). Another theme of the week was to learn more about *motion* in web apps. Nanda Syahrasyad's posts about how [Framer](https://www.nan.fyi/keys-in-framer-motion) [Motion](https://www.nan.fyi/magic-motion) and [SVG](https://www.nan.fyi/svg-paths) work in this regard were excellently laid out! Eventually, I'd like to dive deep into how shadows help create depth on screen interfaces - this is something I do not understand very well yet!
+## Career (or what I could see myself spending 20 years pursuing)
+I took a walk with Andrew to discuss my future career, where he essentially challenged me to think bigger about the scope of what work I'm contributing to.[1] After a few days of thinking, I've come up with three themes I could see myself working around for 20 years, which also align to my skills:
+
+1) Old Steve Jobs computers as 'bicycle for the mind' type shit
+	- Generally, I think that the best technology either helps [amputate](https://stream.syscoi.com/2019/05/30/marshall-mcluhan-extensions-and-amputations/) generally tedious activities (dishwashers, laundry machines, etc.) or extends our reach (access to information like search engines or online media, better payments, etc.).[2] I'm drawn to where computation, interface, and new intelligences collide: AR/VR as new HCI, AI as interface architect, etc.
+	- Some companies/prototypes in this domain that I find interesting:
+		1. [Exa](https://exa.ai/)search built ground up for AI
+		2. [Flora](https://www.florafauna.ai/) fresh interface for creatives using new AI capabilities
+		3. From DeepMind - Gemini Flash 2.5 Lite [creating UIs on the fly](https://x.com/GoogleDeepMind/status/1935719933075177764) that are context aware
+		4. [Notes app](https://x.com/omer_vexler/status/1936177164086317486) that 'builds itself'
+		5. [Mainframe](https://mainframe.inc/) (Jordan Singer's latest company, built Orchestra and Cobot)
+		6. [Sublime](https://sublime.app/) new take on categorizing the internet
+		7. [Daylight Computer](https://daylightcomputer.com/) hyper-specific purpose computing device
+		8. [Bevel](https://www.bevel.health/) quantified self, built on Apple Watch (essentially Whoop competitor)
+2) Living in harmony with nature
+	- This includes access to abundant clean energy, ways to access real wilderness, architecting the built environment to be in harmony with nature. There are many ways technology can help humanity and nature coexist better.
+3) Engaging and shaping your community
+	- I think technology can help engage people to their surroundings more, and by extension get them to be more engaged in shaping it. Why can you not interact with your federal government, city, or neighborhood, or street better through technology? I think there should be software that empowers people to shape their communities. For example, some social media (Substack) can help proliferate ideas about what your community should be like. Companies like [Kaizen Labs](https://www.kaizenlabs.co/) is helping build simple websites for municipalities. There are many ways technology can help in this goal.
+
+When I made my website a few years ago, I wrote: "I'm interested in how technology can help people directly, especially as it relates to expression and the physical world." Ironically, I copy and pasted that paragraph directly when starting this blog; it still feels true. I am excited to take a concrete first step toward these larger ambitions.
+
+[1] He understood that I would (eventually) be unsatisfied with work if it does not align to my broader morals etc.
+
+[2] More examples of amputations that are beneficial:
+1) Anki is a technology that amplifies humanity via amputation (letting a computer remind us about spaced repetition timing, etc.).
+2) A souped up Kindle can be better than a paper book re: highlight/note retrieval. A tool like Readwise is better than a library to notice trends across your entire collection and its notes.
+# How I'm Doing
+## 1. How I'm Feeling
+- Feeling pretty good! This week felt much more like a 'Wednesday hump day' than the first two, but handled it well overall I think!
+- Learning to accept that the road is long, and learning to like the process more.
+## 2. Personal Growth & Learning
+- The first few days are always 'hard' in the sense that we are taking on a new challenge and doing something hard. It gets easier each day as we learn more, and remembering that helped me tackle it better.
+## 3. Standout Moments
+- Being able to parse 'things I want to be different in my app' into todos for my codebase.
+## 4. Biggest Challenge & How I Handled It
+- Scoping a project I could handle with appropriate levels of polish in one week. I took my time picking a project by exploring a few for a few hours the first day.
+## 5. Connections & Collaborations
+- Discussed projects more with my peers, and tried to help some with their challenges!
+## 6. Habits & Routines
+- Stayed active this week and be social during the week. This may be too much (maybe pick being social OR being active during the work week).
+## 7. Surprises
+- How hard CSS layout is with framer motion -- having UI elements respond to movement in 'good' ways.
+## 8. Focus for Next Week
+- Being okay with my learning taking a while --> learning to love that process, as it will serve me well for the future 😊
