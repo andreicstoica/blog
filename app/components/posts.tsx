@@ -23,13 +23,11 @@ export function BlogPosts() {
           >
             <div className="w-full flex md:flex-row flex-col md:space-y-0">
               {/* Date Column */}
-              <p className="text-neutral-600 dark:text-neutral-400 tabular-nums md:w-32 flex-shrink-0">
+              <p className="text-neutral-500 tabular-nums md:w-32 flex-shrink-0">
                 {formatDate(post.metadata.publishedAt, false)}
               </p>
               {/* Title Column */}
-              <p className="text-neutral-900 dark:text-neutral-100 tracking-tight">
-                {post.metadata.title}
-              </p>
+              <p className="tracking-tight">{post.metadata.title}</p>
             </div>
           </Link>
         ))}
