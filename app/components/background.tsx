@@ -13,10 +13,7 @@ export default function BlindsBackground() {
     if (theme) {
       setAnimating(true);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(
-        () => setAnimating(false),
-        theme === "dark" ? 1700 : 1000
-      );
+      timeoutRef.current = setTimeout(() => setAnimating(false), theme === "dark" ? 1700 : 1000);
     }
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);

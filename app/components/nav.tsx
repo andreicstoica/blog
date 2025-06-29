@@ -32,7 +32,7 @@ export function Navbar() {
 
   return (
     <nav
-      className=" top-0 left-0 right-0 z-50  flex flex-row w-full items-center justify-between max-w-2xl mx-auto px-4 py-4"
+      className="top-0 left-0 right-0 z-50 flex flex-row w-full items-center justify-between max-w-2xl px-4 py-4"
       id="nav"
     >
       <div className="flex flex-row flex-1 gap-6 text-neutral-500">

@@ -58,7 +58,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="antialiased min-h-screen flex flex-col">
-        <ThemeProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <BlindsBackground />
           <main className="flex flex-col flex-1 items-center justify-center min-h-screen px-2 md:px-0">
             <Navbar />
