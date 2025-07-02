@@ -46,11 +46,7 @@ export const metadata: Metadata = {
 
 const cx = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
@@ -58,17 +54,28 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="antialiased min-h-screen flex flex-col">
-        <ThemeProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <BlindsBackground />
-          <main className="flex flex-col flex-1 items-center justify-center min-h-screen px-2 md:px-0">
-            <Navbar />
-            <div className="w-full max-w-2xl flex flex-col items-center">
-              {children}
-            </div>
-            <Footer />
+          <div className="flex flex-col min-h-screen">
+            <header className="w-full flex justify-center px-4 md:px-6 lg:px-8">
+              <div className="w-full max-w-4xl">
+                <Navbar />
+              </div>
+            </header>
+
+            <main className="flex-1 w-full flex justify-center px-4 md:px-6 lg:px-8">
+              <div className="w-full max-w-4xl py-8">{children}</div>
+            </main>
+
+            <footer className="w-full flex justify-center px-4 md:px-6 lg:px-8">
+              <div className="w-full max-w-4xl">
+                <Footer />
+              </div>
+            </footer>
+
             <Analytics />
             <SpeedInsights />
-          </main>
+          </div>
         </ThemeProvider>
       </body>
     </html>

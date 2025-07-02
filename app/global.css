@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 ::selection {
   background-color: #47a3f3;
@@ -15,6 +15,20 @@
   --sh-jsxliterals: #6266d1;
   --sh-property: #e25a1c;
   --sh-entity: #e25a1c;
+
+  /* UI Component Colors */
+  --background: 255 255 255;
+  --foreground: 23 23 23;
+  --primary: 23 23 23;
+  --primary-foreground: 250 250 250;
+  --secondary: 245 245 245;
+  --secondary-foreground: 23 23 23;
+  --accent: 245 245 245;
+  --accent-foreground: 23 23 23;
+  --destructive: 239 68 68;
+  --destructive-foreground: 250 250 250;
+  --ring: 23 23 23;
+  --input: 229 229 229;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,6 +37,20 @@
     --sh-identifier: white;
     --sh-keyword: #f47067;
     --sh-string: #0fa295;
+
+    /* UI Component Colors - Dark Mode */
+    --background: 10 10 10;
+    --foreground: 250 250 250;
+    --primary: 250 250 250;
+    --primary-foreground: 23 23 23;
+    --secondary: 38 38 38;
+    --secondary-foreground: 250 250 250;
+    --accent: 38 38 38;
+    --accent-foreground: 250 250 250;
+    --destructive: 239 68 68;
+    --destructive-foreground: 250 250 250;
+    --ring: 250 250 250;
+    --input: 64 64 64;
   }
   html {
     color-scheme: dark;
@@ -31,6 +59,17 @@
 
 html {
   min-width: 360px;
+}
+
+.prose {
+  @apply max-w-none;
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: #171717;
+}
+
+.dark .prose {
+  color: #f5f5f5;
 }
 
 .prose .anchor {
@@ -49,11 +88,21 @@ html {
 
 .prose a {
   @apply underline transition-all decoration-neutral-400 underline-offset-2 decoration-[0.1em];
+  color: #171717;
+  text-decoration-color: rgba(115, 115, 115, 0.4);
+}
+
+.dark .prose a {
+  color: #f5f5f5;
+}
+
+.prose a:hover {
+  @apply decoration-neutral-900 dark:decoration-neutral-100;
 }
 
 .prose .anchor:after {
-  @apply text-neutral-300 ;
-  content: '#';
+  @apply text-neutral-300;
+  content: "#";
 }
 
 .prose *:hover > .anchor {
@@ -61,17 +110,35 @@ html {
 }
 
 .prose pre {
-  @apply bg-neutral-50  rounded-lg overflow-x-auto border py-2 px-3 text-sm;
+  @apply bg-neutral-50 rounded-lg overflow-x-auto border py-4 px-4 text-sm;
+  border-color: rgba(115, 115, 115, 0.2);
+  margin: 1.5rem 0;
+}
+
+.dark .prose pre {
+  @apply bg-neutral-900 border-neutral-700;
 }
 
 .prose code {
-  @apply px-1 py-0.5 rounded-lg;
+  @apply px-1.5 py-0.5 rounded-md text-sm;
+  background-color: rgba(115, 115, 115, 0.1);
+  color: #171717;
+  font-weight: 500;
+}
+
+.dark .prose code {
+  color: #f5f5f5;
+}
+
+.dark .prose code {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .prose pre code {
-  @apply p-0;
+  @apply p-0 bg-transparent;
   border: initial;
   line-height: 1.5;
+  color: inherit;
 }
 
 .prose code span {
@@ -79,40 +146,183 @@ html {
 }
 
 .prose img {
-  /* Don't apply styles to next/image */
-  @apply m-0;
+  @apply m-0 rounded-lg;
+  margin: 2rem 0;
 }
 
 .prose p {
-  @apply my-4;
+  @apply my-6;
+  line-height: 1.8;
+  color: #171717;
+}
+
+.dark .prose p {
+  color: #f5f5f5;
 }
 
 .prose h1 {
-  @apply text-3xl font-medium tracking-tight mt-6 mb-2;
+  @apply text-4xl font-semibold tracking-tight mt-12 mb-6;
+  line-height: 1.2;
+  color: #171717;
+}
+
+.dark .prose h1 {
+  color: #f5f5f5;
 }
 
 .prose h2 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2;
+  @apply text-2xl font-semibold tracking-tight mt-10 mb-4;
+  line-height: 1.3;
+  color: #171717;
+}
+
+.dark .prose h2 {
+  color: #f5f5f5;
 }
 
 .prose h3 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2;
+  @apply text-xl font-semibold tracking-tight mt-8 mb-3;
+  line-height: 1.4;
+  color: #171717;
+}
+
+.dark .prose h3 {
+  color: #f5f5f5;
 }
 
 .prose h4 {
   @apply text-lg font-medium tracking-tight mt-6 mb-2;
+  line-height: 1.5;
+  color: #171717;
+}
+
+.dark .prose h4 {
+  color: #f5f5f5;
+}
+
+.prose h5 {
+  @apply text-base font-medium tracking-tight mt-6 mb-2;
+  line-height: 1.5;
+  color: #171717;
+}
+
+.dark .prose h5 {
+  color: #f5f5f5;
+}
+
+.prose h6 {
+  @apply text-sm font-medium tracking-tight mt-6 mb-2;
+  line-height: 1.5;
+  color: #171717;
+}
+
+.dark .prose h6 {
+  color: #f5f5f5;
 }
 
 .prose strong {
-  @apply font-medium;
+  @apply font-semibold;
+  color: #171717;
+}
+
+.dark .prose strong {
+  color: #f5f5f5;
+}
+
+.prose em {
+  @apply italic;
+  color: #171717;
+}
+
+.dark .prose em {
+  color: #f5f5f5;
 }
 
 .prose ul {
-  @apply list-disc pl-6;
+  @apply list-disc pl-6 my-6;
 }
 
 .prose ol {
-  @apply list-decimal pl-6;
+  @apply list-decimal pl-6 my-6;
+}
+
+.prose li {
+  @apply my-2;
+  line-height: 1.7;
+  color: #171717;
+}
+
+.dark .prose li {
+  color: #f5f5f5;
+}
+
+.prose li > p {
+  @apply my-2;
+}
+
+.prose ul ul,
+.prose ol ol,
+.prose ul ol,
+.prose ol ul {
+  @apply my-3;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-neutral-300 pl-6 my-6 italic;
+  color: rgba(115, 115, 115, 0.8);
+}
+
+.dark .prose blockquote {
+  @apply border-neutral-600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.prose table {
+  @apply w-full border-collapse my-6;
+  display: table;
+  white-space: normal;
+}
+
+.prose th {
+  @apply border-b border-neutral-300 px-4 py-2 text-left font-semibold;
+  color: #171717;
+}
+
+.dark .prose th {
+  color: #f5f5f5;
+}
+
+.prose td {
+  @apply border-b border-neutral-200 px-4 py-2;
+  color: #171717;
+}
+
+.dark .prose td {
+  color: #f5f5f5;
+}
+
+.dark .prose th {
+  @apply border-neutral-600;
+}
+
+.dark .prose td {
+  @apply border-neutral-700;
+}
+
+.prose hr {
+  @apply border-neutral-300 my-8;
+}
+
+.dark .prose hr {
+  @apply border-neutral-600;
+}
+
+.prose mark {
+  @apply bg-yellow-200 px-1 rounded;
+}
+
+.dark .prose mark {
+  @apply bg-yellow-800;
 }
 
 pre::-webkit-scrollbar {
@@ -125,8 +335,8 @@ pre {
 }
 
 /* Remove Safari input shadow on mobile */
-input[type='text'],
-input[type='email'] {
+input[type="text"],
+input[type="email"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -143,20 +353,58 @@ table {
   text-wrap: balance;
 }
 
-
 article {
   margin: 2rem auto;
   max-width: 40rem;
-
-
-  color: var(--dark);
   isolation: isolate;
 }
 
 article a {
-  color: var(--dark);
+  @apply text-neutral-900 dark:text-neutral-100;
 }
 
+/* Ensure theme classes take precedence */
+.dark {
+  color-scheme: dark;
+}
+
+/* Reset any inherited colors that might interfere */
+* {
+  color: inherit;
+}
+
+/* Ensure proper color inheritance for theme classes */
+.text-neutral-900 {
+  color: rgb(23 23 23);
+}
+
+.dark .text-neutral-900 {
+  color: rgb(245 245 245);
+}
+
+.text-neutral-700 {
+  color: rgb(64 64 64);
+}
+
+.dark .text-neutral-700 {
+  color: rgb(163 163 163);
+}
+
+.text-neutral-300 {
+  color: rgb(212 212 212);
+}
+
+.dark .text-neutral-300 {
+  color: rgb(212 212 212);
+}
+
+.text-neutral-100 {
+  color: rgb(245 245 245);
+}
+
+.dark .text-neutral-100 {
+  color: rgb(245 245 245);
+}
 
 body {
   --day: #fffdfa;
@@ -166,18 +414,18 @@ body {
   --dawn: #16132b;
   --morning: #9fb3bf;
 
-
   --light: var(--day);
   --dark: var(--night);
   --shadow: #1a1917;
   --bounce-light: #f5d7a6;
-  --timing-fn: cubic-bezier(0.455, 0.190, 0.000, 0.985);
+  --timing-fn: cubic-bezier(0.455, 0.19, 0, 0.985);
 
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
   background-color: var(--light);
+  color: rgb(23 23 23);
 
   animation-duration: 0s;
   animation-fill-mode: forwards;
@@ -200,6 +448,7 @@ body.dark {
   --dark: var(--day);
   --shadow: #030307;
   --bounce-light: #1b293f;
+  color: rgb(245 245 245);
 }
 
 @keyframes sunrise {
@@ -255,34 +504,40 @@ body.dark {
   width: 100%;
 }
 
-#progressive-blur>div {
+#progressive-blur > div {
   position: absolute;
   height: 100%;
   width: 100%;
   inset: 0;
   backdrop-filter: blur(var(--blur-amount));
-  mask-image: linear-gradient(252deg, transparent, transparent var(--stop1), black var(--stop2), black);
+  mask-image: linear-gradient(
+    252deg,
+    transparent,
+    transparent var(--stop1),
+    black var(--stop2),
+    black
+  );
 }
 
-#progressive-blur>div:nth-child(1) {
+#progressive-blur > div:nth-child(1) {
   --blur-amount: 6px;
   --stop1: 0%;
   --stop2: 0%;
 }
 
-#progressive-blur>div:nth-child(2) {
+#progressive-blur > div:nth-child(2) {
   --blur-amount: 12px;
   --stop1: 40%;
   --stop2: 80%;
 }
 
-#progressive-blur>div:nth-child(3) {
+#progressive-blur > div:nth-child(3) {
   --blur-amount: 48px;
   --stop1: 40%;
   --stop2: 70%;
 }
 
-#progressive-blur>div:nth-child(4) {
+#progressive-blur > div:nth-child(4) {
   --blur-amount: 96px;
   --stop1: 70%;
   --stop2: 80%;
@@ -291,7 +546,7 @@ body.dark {
 #glow {
   position: absolute;
   background: linear-gradient(309deg, var(--bounce-light), var(--bounce-light) 20%, transparent);
-  transition: background 1.0s var(--timing-fn);
+  transition: background 1s var(--timing-fn);
   height: 100%;
   width: 100%;
   opacity: 0.5;
@@ -301,7 +556,7 @@ body.dark {
   content: "";
   position: absolute;
   background: linear-gradient(355deg, var(--bounce-light) 0%, transparent 30%, transparent 100%);
-  transition: background 1.0s var(--timing-fn);
+  transition: background 1s var(--timing-fn);
   opacity: 0.5;
   height: 100%;
   width: 100%;
@@ -310,7 +565,9 @@ body.dark {
 
 .perspective {
   position: absolute;
-  transition: transform 1.7s var(--timing-fn), opacity 4s ease;
+  transition:
+    transform 1.7s var(--timing-fn),
+    opacity 4s ease;
   top: -30vh;
   right: 0;
   width: 80vw;
@@ -319,18 +576,12 @@ body.dark {
   background-blend-mode: darken;
   transform-origin: top right;
   transform-style: preserve-3d;
-  transform: matrix3d(0.7500, -0.0625, 0.0000, 0.0008,
-      0.0000, 1.0000, 0.0000, 0.0000,
-      0.0000, 0.0000, 1.0000, 0.0000,
-      0.0000, 0.0000, 0.0000, 1.0000);
+  transform: matrix3d(0.75, -0.0625, 0, 0.0008, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
 
 .dark .perspective {
   opacity: 0.3;
-  transform: matrix3d(0.8333, 0.0833, 0.0000, 0.0003,
-      0.0000, 1.0000, 0.0000, 0.0000,
-      0.0000, 0.0000, 1.0000, 0.0000,
-      0.0000, 0.0000, 0.0000, 1.0000);
+  transform: matrix3d(0.8333, 0.0833, 0, 0.0003, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
 
 #leaves {
@@ -356,19 +607,19 @@ body.dark {
   background-color: var(--shadow);
 }
 
-#blinds>.shutters {
+#blinds > .shutters {
   display: flex;
   flex-direction: column;
   align-items: end;
   gap: 60px;
-  transition: gap 1.0s var(--timing-fn);
+  transition: gap 1s var(--timing-fn);
 }
 
-.dark #blinds>.shutters {
+.dark #blinds > .shutters {
   gap: 20px;
 }
 
-#blinds>.vertical {
+#blinds > .vertical {
   top: 0;
   position: absolute;
   height: 100%;
@@ -377,7 +628,7 @@ body.dark {
   justify-content: space-around;
 }
 
-.vertical>.bar {
+.vertical > .bar {
   width: 5;
   height: 100%;
 }
@@ -385,7 +636,7 @@ body.dark {
 .shutter {
   width: 100%;
   height: 40px;
-  transition: height 1.0s var(--timing-fn);
+  transition: height 1s var(--timing-fn);
 }
 
 .dark .shutter {

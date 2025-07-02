@@ -1,12 +1,6 @@
 function ArrowIcon() {
   return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
         fill="currentColor"
@@ -17,11 +11,11 @@ function ArrowIcon() {
 
 export default function Footer() {
   return (
-    <footer className="mb-4 bottom-0 z-50">
-      <ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 text-neutral-500 md:flex-row md:space-x-4 md:space-y-0 dark:text-neutral-300">
+    <footer className="py-8 border-t border-neutral-200 dark:border-neutral-700">
+      <ul className="font-sm flex flex-col space-x-0 space-y-2 text-neutral-500 md:flex-row md:space-x-4 md:space-y-0 dark:text-neutral-300">
         <li>
           <a
-            className="flex items-center transition-all hover:text-neutral-600"
+            className="flex items-center transition-all hover:text-neutral-600 dark:hover:text-neutral-200"
             rel="noopener noreferrer"
             target="_blank"
             href="/rss"
@@ -32,7 +26,7 @@ export default function Footer() {
         </li>
         <li>
           <a
-            className="flex items-center transition-all hover:text-neutral-600"
+            className="flex items-center transition-all hover:text-neutral-600 dark:hover:text-neutral-200"
             rel="noopener noreferrer"
             target="_blank"
             href="https://github.com/andreicstoica/blog"
@@ -42,7 +36,7 @@ export default function Footer() {
           </a>
         </li>
       </ul>
-      <p className="mt-8 text-neutral-500">
+      <p className="mt-6 text-neutral-500 dark:text-neutral-400">
         © {new Date().getFullYear()} MIT Licensed
       </p>
     </footer>

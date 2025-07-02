@@ -5,9 +5,7 @@ import { highlight } from "sugar-high";
 import React from "react";
 
 function Table({ data }) {
-  let headers = data.headers.map((header, index) => (
-    <th key={index}>{header}</th>
-  ));
+  let headers = data.headers.map((header, index) => <th key={index}>{header}</th>);
   let rows = data.rows.map((row, index) => (
     <tr key={index}>
       {row.map((cell, cellIndex) => (
@@ -45,12 +43,41 @@ function CustomLink(props) {
 }
 
 function RoundedImage(props) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />;
+  return <Image alt={props.alt} className="rounded-lg shadow-sm" {...props} />;
+}
+
+function Blockquote({ children }) {
+  return (
+    <blockquote className="border-l-4 border-neutral-300 dark:border-neutral-600 pl-6 my-6 italic text-neutral-600 dark:text-neutral-400">
+      {children}
+    </blockquote>
+  );
+}
+
+function Hr() {
+  return <hr className="border-neutral-300 dark:border-neutral-600 my-8" />;
 }
 
 function Code({ children, ...props }) {
   let codeHTML = highlight(children);
-  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
+  return (
+    <code
+      className="px-1.5 py-0.5 rounded-md text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium"
+      dangerouslySetInnerHTML={{ __html: codeHTML }}
+      {...props}
+    />
+  );
+}
+
+function Pre({ children, ...props }) {
+  return (
+    <pre
+      className="bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-700 py-4 px-4 text-sm my-6"
+      {...props}
+    >
+      {children}
+    </pre>
+  );
 }
 
 function slugify(str) {
@@ -77,7 +104,7 @@ function createHeading(level) {
           className: "anchor",
         }),
       ],
-      children
+      children,
     );
   };
 
@@ -96,14 +123,12 @@ let components = {
   Image: RoundedImage,
   a: CustomLink,
   code: Code,
+  pre: Pre,
+  blockquote: Blockquote,
+  hr: Hr,
   Table,
 };
 
 export function CustomMDX(props) {
-  return (
-    <MDXRemote
-      {...props}
-      components={{ ...components, ...(props.components || {}) }}
-    />
-  );
+  return <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />;
 }

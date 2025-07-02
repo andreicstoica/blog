@@ -31,13 +31,14 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav
-      className=" top-0 left-0 right-0 z-50  flex flex-row w-full items-center justify-between max-w-2xl mx-auto px-4 py-4"
-      id="nav"
-    >
-      <div className="flex flex-row flex-1 gap-6 text-neutral-500">
+    <nav className="flex flex-row w-full items-center justify-between py-6" id="nav">
+      <div className="flex flex-row flex-1 gap-6 text-neutral-500 dark:text-neutral-400">
         {Object.entries(navItems).map(([path, { name }]) => (
-          <Link key={path} href={path} className="hover:text-neutral-600">
+          <Link
+            key={path}
+            href={path}
+            className="hover:text-neutral-600 dark:hover:text-neutral-300"
+          >
             {name}
           </Link>
         ))}
