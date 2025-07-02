@@ -21,13 +21,9 @@ export function ThemeToggle({ onToggle }: ThemeToggleProps) {
     <Button
       onClick={toggleTheme}
       variant="ghost"
-      className="text-neutral-500 hover:cursor-pointer hover:text-neutral-600"
+      className="text-neutral-500 dark:text-neutral-400 hover:cursor-pointer hover:text-neutral-600 dark:hover:text-neutral-300"
     >
-      {theme === "dark" ? (
-        <Sun className="w-5 h-5" />
-      ) : (
-        <Moon className="w-5 h-5" />
-      )}
+      {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
     </Button>
   );
 }
