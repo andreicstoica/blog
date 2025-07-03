@@ -1,5 +1,24 @@
 @import "tailwindcss";
 
+/* Ensure system theme detection works on initial load */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+  }
+
+  html:not(.light) {
+    color-scheme: dark;
+  }
+
+  body:not(.light) {
+    --light: var(--night);
+    --dark: var(--day);
+    --shadow: #030307;
+    --bounce-light: #1b293f;
+    color: rgb(245 245 245);
+  }
+}
+
 ::selection {
   background-color: #47a3f3;
   color: #fefefe;
@@ -55,10 +74,69 @@
   html {
     color-scheme: dark;
   }
+
+  /* Apply dark theme styles based on system preference */
+  body {
+    --light: var(--night);
+    --dark: var(--day);
+    --shadow: #030307;
+    --bounce-light: #1b293f;
+    color: rgb(245 245 245);
+  }
+
+  .prose {
+    color: #f5f5f5;
+  }
+
+  .prose a {
+    color: #f5f5f5;
+  }
+
+  .prose code {
+    color: #f5f5f5;
+  }
+
+  .prose p {
+    color: #f5f5f5;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    color: #f5f5f5;
+  }
+
+  .prose strong {
+    color: #f5f5f5;
+  }
+
+  .prose em {
+    color: #f5f5f5;
+  }
+
+  .prose li {
+    color: #f5f5f5;
+  }
+
+  .prose th {
+    color: #f5f5f5;
+  }
+
+  .prose td {
+    color: #f5f5f5;
+  }
 }
 
 html {
   min-width: 360px;
+  font-family:
+    var(--font-ibm-plex-sans),
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 .prose {
@@ -426,6 +504,11 @@ body {
   width: 100%;
   background-color: var(--light);
   color: rgb(23 23 23);
+  font-family:
+    var(--font-ibm-plex-sans),
+    system-ui,
+    -apple-system,
+    sans-serif;
 
   animation-duration: 0s;
   animation-fill-mode: forwards;
@@ -449,6 +532,11 @@ body.dark {
   --shadow: #030307;
   --bounce-light: #1b293f;
   color: rgb(245 245 245);
+  font-family:
+    var(--font-ibm-plex-sans),
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 @keyframes sunrise {

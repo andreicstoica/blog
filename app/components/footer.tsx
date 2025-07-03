@@ -11,7 +11,7 @@ function ArrowIcon() {
 
 export default function Footer() {
   return (
-    <footer className="py-8 border-t border-neutral-200 dark:border-neutral-700">
+    <footer className="py-8">
       <ul className="font-sm flex flex-col space-x-0 space-y-2 text-neutral-500 md:flex-row md:space-x-4 md:space-y-0 dark:text-neutral-300">
         <li>
           <a

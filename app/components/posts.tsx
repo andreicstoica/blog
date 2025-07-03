@@ -14,11 +14,7 @@ export function BlogPosts() {
           return 1;
         })
         .map((post) => (
-          <Link
-            key={post.slug}
-            className="group block p-4 rounded-lg transition-shadow duration-200 hover:shadow-[6px_6px_24px_rgba(0,0,0,0.15),-6px_-6px_24px_rgba(255,255,255,0.7)] dark:hover:shadow-[6px_6px_24px_rgba(0,0,0,0.4),-6px_-6px_24px_rgba(255,255,255,0.1)]"
-            href={`/blog/${post.slug}`}
-          >
+          <Link key={post.slug} className="group block p-4 rounded-lg" href={`/blog/${post.slug}`}>
             <div className="w-full flex md:flex-row flex-col md:space-y-0 space-y-2">
               {/* Date Column */}
               <p className="text-neutral-500 dark:text-neutral-400 tabular-nums text-sm font-medium md:w-32 flex-shrink-0">
@@ -26,8 +22,9 @@ export function BlogPosts() {
               </p>
               <div className="flex-1">
                 {/* Title */}
-                <h3 className="font-semibold text-lg tracking-tight text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors">
+                <h3 className="font-semibold text-lg tracking-tight text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors relative inline-block">
                   {post.metadata.title}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-neutral-900 dark:bg-neutral-100 transition-all duration-500 group-hover:w-full"></span>
                 </h3>
                 {/* Summary */}
                 {post.metadata.summary && (
