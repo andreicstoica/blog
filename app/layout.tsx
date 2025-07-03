@@ -53,8 +53,48 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={cx(ibmPlexSans.variable, GeistMono.variable)}
       suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  var isDark = false;
+
+                  if (theme === 'dark') {
+                    isDark = true;
+                  } else if (theme === 'light') {
+                    isDark = false;
+                  } else {
+                    // No stored preference, use system preference
+                    isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  }
+
+                  if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.colorScheme = 'dark';
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.style.colorScheme = 'light';
+                  }
+                } catch (e) {
+                  console.warn('Theme detection failed:', e);
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="antialiased min-h-screen flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem={true}
+          storageKey="theme"
+          disableTransitionOnChange={false}
+          themes={["light", "dark", "system"]}
+        >
           <BlindsBackground />
           <div className="flex flex-col min-h-screen">
             <header className="w-full flex justify-center px-4 md:px-6 lg:px-8">
