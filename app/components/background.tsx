@@ -10,7 +10,7 @@ export default function BlindsBackground() {
 
   // Animate only when theme changes
   useEffect(() => {
-    if (theme) {
+    if (theme && theme !== "system") {
       setAnimating(true);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => setAnimating(false), theme === "dark" ? 1700 : 1000);
@@ -22,10 +22,13 @@ export default function BlindsBackground() {
 
   // Set body classes for animation
   useEffect(() => {
-    if (animating) {
+    if (animating && theme && theme !== "system") {
       document.body.classList.add("animation-ready");
-      if (theme === "dark") document.body.classList.add("dark");
-      else document.body.classList.remove("dark");
+      if (theme === "dark") {
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.remove("dark");
+      }
     } else {
       document.body.classList.remove("animation-ready");
     }
