@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import { highlight } from "sugar-high";
 import React from "react";
+import { ServerMDXComponent } from "./mdx-utils";
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => <th key={index}>{header}</th>);
@@ -113,6 +113,110 @@ function createHeading(level) {
   return Heading;
 }
 
+// Server-side footnote reference component
+function FootnoteReference({ id, number }: { id: string; number: string }) {
+  return (
+    <sup className="footnote-ref">
+      <a
+        href={`#footnote-${id}`}
+        id={`footnote-ref-${id}`}
+        className="footnote-link"
+        aria-label={`Jump to footnote ${number}`}
+        role="doc-noteref"
+      >
+        {number}
+      </a>
+    </sup>
+  );
+}
+
+// Server-side footnote definition component
+function FootnoteDefinition({
+  id,
+  number,
+  content,
+}: {
+  id: string;
+  number: number;
+  content: string;
+}) {
+  return (
+    <div id={`footnote-${id}`} className="footnote-definition" role="doc-endnote">
+      <div className="footnote-content">
+        <span className="footnote-number" aria-label={`Footnote ${number}`}>
+          {number}.
+        </span>
+        <div className="footnote-text">
+          <span dangerouslySetInnerHTML={{ __html: content }} />
+        </div>
+      </div>
+      <a
+        href={`#footnote-ref-${id}`}
+        className="footnote-back-link"
+        aria-label={`Return to footnote ${number} reference`}
+        role="doc-backlink"
+      >
+        ↩
+      </a>
+    </div>
+  );
+}
+
+// Parse footnotes from content
+function parseFootnotes(content: string) {
+  const footnotes: Array<{ id: string; number: number; content: string }> = [];
+  const lines = content.split("\n");
+  let footnoteStartIndex = -1;
+
+  // Find where footnotes start
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (line === "{<hr />}" || line.match(/^\d+\s/)) {
+      footnoteStartIndex = i;
+      break;
+    }
+  }
+
+  if (footnoteStartIndex !== -1) {
+    const footnoteLines = lines.slice(footnoteStartIndex);
+    let currentFootnote: { id: string; number: number; content: string } | null = null;
+
+    footnoteLines.forEach((line) => {
+      const trimmedLine = line.trim();
+
+      if (trimmedLine === "{<hr />}") {
+        return;
+      }
+
+      const footnoteMatch = trimmedLine.match(/^(\d+)\s+(.*)$/);
+      if (footnoteMatch) {
+        if (currentFootnote) {
+          footnotes.push(currentFootnote);
+        }
+
+        const number = parseInt(footnoteMatch[1], 10);
+        currentFootnote = {
+          id: `fn-${number}`,
+          number,
+          content: footnoteMatch[2].trim(),
+        };
+      } else if (currentFootnote && trimmedLine.length > 0) {
+        currentFootnote.content += " " + trimmedLine;
+      }
+    });
+
+    if (currentFootnote) {
+      footnotes.push(currentFootnote);
+    }
+  }
+
+  return {
+    footnotes: footnotes.sort((a, b) => a.number - b.number),
+    contentWithoutFootnotes:
+      footnoteStartIndex !== -1 ? lines.slice(0, footnoteStartIndex).join("\n").trim() : content,
+  };
+}
+
 let components = {
   h1: createHeading(1),
   h2: createHeading(2),
@@ -129,6 +233,98 @@ let components = {
   Table,
 };
 
-export function CustomMDX(props) {
-  return <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />;
+export async function CustomMDX(props) {
+  const { source, components: customComponents = {}, ...otherProps } = props;
+
+  // Parse footnotes from source
+  const { footnotes, contentWithoutFootnotes } = parseFootnotes(source);
+
+  // Process content to replace footnote references
+  let processedContent = contentWithoutFootnotes;
+  footnotes.forEach((footnote) => {
+    const refPattern = new RegExp(`\\[${footnote.number}\\]`, "g");
+    processedContent = processedContent.replace(
+      refPattern,
+      `<FootnoteReference id="${footnote.id.replace("fn-", "")}" number="${footnote.number}" />`,
+    );
+  });
+
+  const enhancedComponents = {
+    ...components,
+    ...customComponents,
+    FootnoteReference: ({ id, number }: { id: string; number: string }) => (
+      <FootnoteReference id={id} number={number} />
+    ),
+  };
+
+  return (
+    <div className="static-footnotes-wrapper">
+      <div className="content-with-footnotes">
+        <ServerMDXComponent
+          source={processedContent}
+          components={enhancedComponents}
+          {...otherProps}
+        />
+      </div>
+
+      {footnotes.length > 0 && (
+        <section className="footnotes-section" role="doc-endnotes" aria-label="Footnotes">
+          <div className="footnotes-header">
+            <h2 className="footnotes-title">Footnotes</h2>
+          </div>
+          <div className="footnotes-list">
+            {footnotes.map((footnote) => (
+              <FootnoteDefinition
+                key={footnote.id}
+                id={footnote.id}
+                number={footnote.number}
+                content={footnote.content}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              function enhanceFootnotes() {
+                // Add smooth scrolling to footnote links
+                document.querySelectorAll('.footnote-link').forEach(function(link) {
+                  link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.getElementById(this.getAttribute('href').substring(1));
+                    if (target) {
+                      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      window.history.pushState(null, '', this.getAttribute('href'));
+                    }
+                  });
+                });
+
+                // Add smooth scrolling to footnote back links
+                document.querySelectorAll('.footnote-back-link').forEach(function(link) {
+                  link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.getElementById(this.getAttribute('href').substring(1));
+                    if (target) {
+                      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      window.history.pushState(null, '', this.getAttribute('href'));
+                    }
+                  });
+                });
+              }
+
+              // Run when DOM is ready
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', enhanceFootnotes);
+              } else {
+                enhanceFootnotes();
+              }
+            })();
+          `,
+        }}
+      />
+    </div>
+  );
 }

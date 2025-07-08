@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Smooth scrolling for footnote navigation */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Ensure system theme detection works on initial load */
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
@@ -751,4 +756,222 @@ body.dark {
   100% {
     transform: perspective(400px) rotateX(0deg) rotateY(0deg) scale(1);
   }
+}
+
+/* Footnote Styles */
+.footnote-ref {
+  @apply font-medium;
+  line-height: 1;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+}
+
+.footnote-link {
+  @apply text-blue-600 dark:text-blue-400 no-underline;
+  font-size: 0.875em;
+  font-weight: 500;
+  padding: 0.125em 0.25em;
+  border-radius: 0.25em;
+  transition: all 0.2s ease;
+  position: relative;
+  top: -0.125em;
+}
+
+.footnote-link:hover {
+  @apply bg-blue-50 dark:bg-blue-900/20;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.footnote-link:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+.footnote-link:active {
+  transform: translateY(0);
+}
+
+.footnote-ref-highlight {
+  @apply bg-yellow-200 dark:bg-yellow-800;
+  animation: footnote-highlight 2s ease-out;
+}
+
+@keyframes footnote-highlight {
+  0% {
+    background-color: rgba(255, 255, 0, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.footnotes-section {
+  @apply mt-16 pt-8;
+  border-top: 1px solid rgba(115, 115, 115, 0.2);
+}
+
+.dark .footnotes-section {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.footnotes-divider {
+  @apply hidden;
+}
+
+.footnotes-header {
+  @apply mb-6;
+}
+
+.footnotes-title {
+  @apply text-lg font-semibold text-neutral-900 dark:text-neutral-100;
+  margin: 0 0 1rem 0;
+}
+
+.footnotes-list {
+  @apply list-none p-0 m-0;
+}
+
+.footnote-item {
+  @apply list-none p-0 m-0;
+}
+
+.footnote-definition {
+  @apply mb-4 flex items-start gap-3;
+  line-height: 1.6;
+}
+
+.footnote-content {
+  @apply flex items-start gap-2 flex-1;
+}
+
+.footnote-number {
+  @apply text-neutral-600 dark:text-neutral-400 font-medium;
+  font-size: 0.875em;
+  min-width: 1.5em;
+  flex-shrink: 0;
+}
+
+.footnote-text {
+  @apply text-neutral-700 dark:text-neutral-300;
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+.footnote-text p {
+  @apply m-0;
+}
+
+.footnote-text p:not(:last-child) {
+  @apply mb-2;
+}
+
+.footnote-back-link {
+  @apply text-blue-600 dark:text-blue-400 no-underline ml-2;
+  font-size: 0.875em;
+  font-weight: 500;
+  padding: 0.125em 0.25em;
+  border-radius: 0.25em;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.footnote-back-link:hover {
+  @apply bg-blue-50 dark:bg-blue-900/20;
+  text-decoration: none;
+  transform: translateX(-2px);
+}
+
+.footnote-back-link:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+.footnote-back-link:active {
+  transform: translateX(0);
+}
+
+.footnote-highlight {
+  @apply bg-yellow-200 dark:bg-yellow-800;
+  animation: footnote-highlight 2s ease-out;
+  border-radius: 0.25em;
+  padding: 0.25em;
+  margin: -0.25em;
+}
+
+.footnote-content-wrapper {
+  @apply relative;
+}
+
+.prose-content {
+  @apply mb-0;
+}
+
+.static-footnotes-wrapper {
+  @apply relative;
+}
+
+.content-with-footnotes {
+  @apply mb-0;
+}
+
+/* Scroll margin for footnote targets */
+[id^="footnote-"] {
+  scroll-margin-top: 2rem;
+}
+
+[id^="footnote-ref-"] {
+  scroll-margin-top: 2rem;
+}
+
+/* Ensure footnotes don't interfere with prose styling */
+.prose .footnote-ref {
+  color: inherit;
+}
+
+.prose .footnote-link {
+  color: rgb(37 99 235);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.dark .prose .footnote-link {
+  color: rgb(96 165 250);
+}
+
+.prose .footnotes-section {
+  color: inherit;
+  max-width: none;
+}
+
+.prose .footnotes-title {
+  color: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.prose .footnote-definition {
+  color: inherit;
+  margin-bottom: 1rem;
+}
+
+.prose .footnote-number {
+  color: rgba(115, 115, 115, 0.8);
+}
+
+.dark .prose .footnote-number {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.prose .footnote-text {
+  color: inherit;
+  font-size: 0.9em;
+}
+
+.prose .footnote-back-link {
+  color: rgb(37 99 235);
+  text-decoration: none;
+}
+
+.dark .prose .footnote-back-link {
+  color: rgb(96 165 250);
 }
