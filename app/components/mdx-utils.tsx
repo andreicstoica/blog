@@ -9,6 +9,8 @@ interface MDXComponentProps {
   components?: Record<string, React.ComponentType<any>>;
 }
 
+type MDXContent = React.ComponentType<{ components?: Record<string, React.ComponentType<any>> }>;
+
 export async function compileMDX(source: string) {
   const compiled = await compile(source, {
     outputFormat: "function-body",
@@ -18,9 +20,10 @@ export async function compileMDX(source: string) {
 
   const { default: MDXContent } = await run(compiled, {
     ...runtime,
+    Fragment: React.Fragment,
   });
 
-  return MDXContent;
+  return MDXContent as MDXContent;
 }
 
 // For server-side rendering
@@ -32,7 +35,7 @@ export async function ServerMDXComponent({ source, components = {} }: MDXCompone
 
 // For client-side rendering
 export function ClientMDXComponent({ source, components = {} }: MDXComponentProps) {
-  const [MDXContent, setMDXContent] = React.useState<React.ComponentType | null>(null);
+  const [MDXContent, setMDXContent] = React.useState<MDXContent | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -42,7 +45,7 @@ export function ClientMDXComponent({ source, components = {} }: MDXComponentProp
         setIsLoading(true);
         setError(null);
         const CompiledMDX = await compileMDX(source);
-        setMDXContent(() => CompiledMDX);
+        setMDXContent(() => CompiledMDX as MDXContent);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to compile MDX");
       } finally {

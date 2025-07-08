@@ -92,7 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           defaultTheme="system"
           enableSystem={true}
           storageKey="theme"
-          disableTransitionOnChange={false}
+          disableTransitionOnChange={true}
           themes={["light", "dark", "system"]}
         >
           <BlindsBackground />
