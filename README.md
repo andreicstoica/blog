@@ -1,6 +1,6 @@
 # Andrei Stoica's Personal Site
 [https://andrei.bio](https://andrei.bio)
-This is my personal website and blog. Built with:
+This is my personal website and blog. Built with: Next.js, MDX, and Zed AI Agent support.
 
 - MDX and Markdown support
 - Optimized for SEO (sitemap, robots, JSON-LD schema)
