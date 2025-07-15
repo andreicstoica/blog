@@ -92,7 +92,7 @@ export default async function Blog({ params }) {
           )}
         </header>
 
-        <article className="prose prose-lg max-w-none text-neutral-900 dark:text-neutral-100">
+        <article className="prose prose-lg text-neutral-900 dark:text-neutral-100">
           <CustomMDX source={post.content} />
         </article>
       </div>
