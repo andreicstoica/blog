@@ -1,8 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { highlight } from "sugar-high";
 import React from "react";
-import { ServerMDXComponent } from "./mdx-utils";
+import { ClientMDXComponent } from "./mdx-utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from "../../components/ui/tooltip";
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => <th key={index}>{header}</th>);
@@ -84,11 +92,11 @@ function slugify(str) {
   return str
     .toString()
     .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/&/g, "-and-") // Replace & with 'and'
-    .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
-    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/&/g, "-and-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-");
 }
 
 function createHeading(level) {
@@ -109,62 +117,44 @@ function createHeading(level) {
   };
 
   Heading.displayName = `Heading${level}`;
-
   return Heading;
 }
 
-// Server-side footnote reference component
-function FootnoteReference({ id, number }: { id: string; number: string }) {
-  return (
-    <sup className="footnote-ref">
-      <a
-        href={`#footnote-${id}`}
-        id={`footnote-ref-${id}`}
-        className="footnote-link"
-        aria-label={`Jump to footnote ${number}`}
-        role="doc-noteref"
-      >
-        {number}
-      </a>
-    </sup>
-  );
-}
+// Simple footnote tooltip component
+function FootnoteTooltip({ number, content }: { number: number; content: string }) {
+  // Clean up the content
+  const cleanContent = content
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 
-// Server-side footnote definition component
-function FootnoteDefinition({
-  id,
-  number,
-  content,
-}: {
-  id: string;
-  number: number;
-  content: string;
-}) {
   return (
-    <div id={`footnote-${id}`} className="footnote-definition" role="doc-endnote">
-      <div className="footnote-content">
-        <span className="footnote-number" aria-label={`Footnote ${number}`}>
-          {number}.
-        </span>
-        <div className="footnote-text">
-          <span dangerouslySetInnerHTML={{ __html: content }} />
-        </div>
-      </div>
-      <a
-        href={`#footnote-ref-${id}`}
-        className="footnote-back-link"
-        aria-label={`Return to footnote ${number} reference`}
-        role="doc-backlink"
+    <Tooltip delayDuration={300}>
+      <TooltipTrigger asChild>
+        <sup className="footnote-ref">
+          <button
+            className="footnote-tooltip-trigger text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30 focus:bg-blue-100 dark:focus:bg-blue-900/30 px-1.5 py-0.5 rounded-md text-sm font-semibold transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+            aria-label={`Show footnote ${number}`}
+            type="button"
+          >
+            {number}
+          </button>
+        </sup>
+      </TooltipTrigger>
+      <TooltipContent
+        side="top"
+        sideOffset={8}
+        className="footnote-tooltip-content max-w-xs bg-gray-900 dark:bg-gray-50 text-white dark:text-gray-900 z-[60] text-sm leading-relaxed p-4 shadow-2xl rounded-lg border border-gray-600 dark:border-gray-300"
       >
-        ↩
-      </a>
-    </div>
+        {cleanContent}
+      </TooltipContent>
+    </Tooltip>
   );
 }
 
 // Parse footnotes from content
 function parseFootnotes(content: string) {
-  const footnotes: Array<{ id: string; number: number; content: string }> = [];
+  const footnotes: Array<{ number: number; content: string }> = [];
   const lines = content.split("\n");
   let footnoteStartIndex = -1;
 
@@ -179,7 +169,7 @@ function parseFootnotes(content: string) {
 
   if (footnoteStartIndex !== -1) {
     const footnoteLines = lines.slice(footnoteStartIndex);
-    let currentFootnote: { id: string; number: number; content: string } | null = null;
+    let currentFootnote: { number: number; content: string } | null = null;
 
     footnoteLines.forEach((line) => {
       const trimmedLine = line.trim();
@@ -196,7 +186,6 @@ function parseFootnotes(content: string) {
 
         const number = parseInt(footnoteMatch[1], 10);
         currentFootnote = {
-          id: `fn-${number}`,
           number,
           content: footnoteMatch[2].trim(),
         };
@@ -233,11 +222,20 @@ let components = {
   Table,
 };
 
-export async function CustomMDX(props) {
+export function CustomMDX(props) {
   const { source, components: customComponents = {}, ...otherProps } = props;
 
   // Parse footnotes from source
   const { footnotes, contentWithoutFootnotes } = parseFootnotes(source);
+
+  // Create footnote lookup map
+  const footnoteMap = React.useMemo(() => {
+    const map = new Map();
+    footnotes.forEach((footnote) => {
+      map.set(footnote.number, footnote.content);
+    });
+    return map;
+  }, [footnotes]);
 
   // Process content to replace footnote references
   let processedContent = contentWithoutFootnotes;
@@ -245,86 +243,58 @@ export async function CustomMDX(props) {
     const refPattern = new RegExp(`\\[${footnote.number}\\]`, "g");
     processedContent = processedContent.replace(
       refPattern,
-      `<FootnoteReference id="${footnote.id.replace("fn-", "")}" number="${footnote.number}" />`,
+      `<FootnoteTooltipRef number={${footnote.number}} />`,
     );
   });
 
   const enhancedComponents = {
     ...components,
     ...customComponents,
-    FootnoteReference: ({ id, number }: { id: string; number: string }) => (
-      <FootnoteReference id={id} number={number} />
-    ),
+    FootnoteTooltipRef: ({ number }: { number: number }) => {
+      const content = footnoteMap.get(number) || "";
+      return <FootnoteTooltip number={number} content={content} />;
+    },
   };
 
   return (
-    <div className="static-footnotes-wrapper">
-      <div className="content-with-footnotes">
-        <ServerMDXComponent
-          source={processedContent}
-          components={enhancedComponents}
-          {...otherProps}
-        />
+    <TooltipProvider delayDuration={300}>
+      <div className="mdx-with-footnote-tooltips">
+        <div className="mdx-content">
+          <ClientMDXComponent
+            source={processedContent}
+            components={enhancedComponents}
+            {...otherProps}
+          />
+        </div>
+
+        {/* Hidden footnote section for accessibility and print */}
+        {footnotes.length > 0 && (
+          <section
+            className="footnotes-section sr-only print:not-sr-only mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-700"
+            role="doc-endnotes"
+            aria-label="Footnotes"
+          >
+            <h2 className="footnotes-title text-lg font-semibold mb-4">Footnotes</h2>
+            <div className="footnotes-list">
+              {footnotes.map((footnote) => (
+                <div
+                  key={footnote.number}
+                  id={`footnote-${footnote.number}`}
+                  className="footnote-definition mb-4 flex items-start gap-3"
+                  role="doc-endnote"
+                >
+                  <span className="footnote-number font-medium text-neutral-600 dark:text-neutral-400">
+                    {footnote.number}.
+                  </span>
+                  <div className="footnote-text text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed">
+                    {footnote.content}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
-
-      {footnotes.length > 0 && (
-        <section className="footnotes-section" role="doc-endnotes" aria-label="Footnotes">
-          <div className="footnotes-header">
-            <h2 className="footnotes-title">Footnotes</h2>
-          </div>
-          <div className="footnotes-list">
-            {footnotes.map((footnote) => (
-              <FootnoteDefinition
-                key={footnote.id}
-                id={footnote.id}
-                number={footnote.number}
-                content={footnote.content}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function() {
-              function enhanceFootnotes() {
-                // Add smooth scrolling to footnote links
-                document.querySelectorAll('.footnote-link').forEach(function(link) {
-                  link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.getElementById(this.getAttribute('href').substring(1));
-                    if (target) {
-                      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      window.history.pushState(null, '', this.getAttribute('href'));
-                    }
-                  });
-                });
-
-                // Add smooth scrolling to footnote back links
-                document.querySelectorAll('.footnote-back-link').forEach(function(link) {
-                  link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.getElementById(this.getAttribute('href').substring(1));
-                    if (target) {
-                      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      window.history.pushState(null, '', this.getAttribute('href'));
-                    }
-                  });
-                });
-              }
-
-              // Run when DOM is ready
-              if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', enhanceFootnotes);
-              } else {
-                enhanceFootnotes();
-              }
-            })();
-          `,
-        }}
-      />
-    </div>
+    </TooltipProvider>
   );
 }

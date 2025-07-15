@@ -9,7 +9,7 @@ This is my personal website and blog. Built with: Next.js, MDX, and Zed AI Agent
 - Syntax highlighting
 - Tailwind v4
 - Vercel Speed Insights / Web Analytics
-- Geist font
+- IBM Plex fonts
 
 ## Development
 

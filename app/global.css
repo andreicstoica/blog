@@ -145,10 +145,10 @@ html {
 }
 
 .prose {
-  @apply max-w-none;
   font-size: 1.1rem;
   line-height: 1.75;
   color: #171717;
+  max-width: none;
 }
 
 .dark .prose {
@@ -437,8 +437,8 @@ table {
 }
 
 article {
-  margin: 2rem auto;
-  max-width: 40rem;
+  margin: 2rem 0;
+  max-width: none;
   isolation: isolate;
 }
 
@@ -758,7 +758,7 @@ body.dark {
   }
 }
 
-/* Footnote Styles */
+/* Footnote Tooltip Styles */
 .footnote-ref {
   @apply font-medium;
   line-height: 1;
@@ -766,212 +766,61 @@ body.dark {
   margin-right: 0.1em;
 }
 
-.footnote-link {
-  @apply text-blue-600 dark:text-blue-400 no-underline;
-  font-size: 0.875em;
-  font-weight: 500;
-  padding: 0.125em 0.25em;
-  border-radius: 0.25em;
-  transition: all 0.2s ease;
-  position: relative;
-  top: -0.125em;
+/* Enhanced tooltip content styling */
+[data-slot="tooltip-content"] {
+  background-color: rgb(17 24 39) !important; /* gray-900 */
+  color: rgb(255 255 255) !important;
+  border: 1px solid rgb(75 85 99) !important; /* gray-600 */
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  backdrop-filter: blur(8px) !important;
+  opacity: 1 !important;
+  z-index: 60 !important;
 }
 
-.footnote-link:hover {
-  @apply bg-blue-50 dark:bg-blue-900/20;
-  text-decoration: none;
-  transform: translateY(-1px);
+.dark [data-slot="tooltip-content"] {
+  background-color: rgb(249 250 251) !important; /* gray-50 */
+  color: rgb(17 24 39) !important; /* gray-900 */
+  border: 1px solid rgb(209 213 219) !important; /* gray-300 */
 }
 
-.footnote-link:focus {
-  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+/* Ensure tooltip has solid background */
+.footnote-tooltip-content {
+  background: rgb(17 24 39) !important;
+  color: rgb(255 255 255) !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
 }
 
-.footnote-link:active {
-  transform: translateY(0);
+.dark .footnote-tooltip-content {
+  background: rgb(249 250 251) !important;
+  color: rgb(17 24 39) !important;
 }
 
-.footnote-ref-highlight {
-  @apply bg-yellow-200 dark:bg-yellow-800;
-  animation: footnote-highlight 2s ease-out;
+/* Hide footnote list visually but keep for accessibility */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
-@keyframes footnote-highlight {
-  0% {
-    background-color: rgba(255, 255, 0, 0.3);
+/* Show footnotes in print */
+@media print {
+  .print\:not-sr-only {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
   }
-  100% {
-    background-color: transparent;
-  }
-}
-
-.footnotes-section {
-  @apply mt-16 pt-8;
-  border-top: 1px solid rgba(115, 115, 115, 0.2);
-}
-
-.dark .footnotes-section {
-  border-top-color: rgba(255, 255, 255, 0.1);
-}
-
-.footnotes-divider {
-  @apply hidden;
-}
-
-.footnotes-header {
-  @apply mb-6;
-}
-
-.footnotes-title {
-  @apply text-lg font-semibold text-neutral-900 dark:text-neutral-100;
-  margin: 0 0 1rem 0;
-}
-
-.footnotes-list {
-  @apply list-none p-0 m-0;
-}
-
-.footnote-item {
-  @apply list-none p-0 m-0;
-}
-
-.footnote-definition {
-  @apply mb-4 flex items-start gap-3;
-  line-height: 1.6;
-}
-
-.footnote-content {
-  @apply flex items-start gap-2 flex-1;
-}
-
-.footnote-number {
-  @apply text-neutral-600 dark:text-neutral-400 font-medium;
-  font-size: 0.875em;
-  min-width: 1.5em;
-  flex-shrink: 0;
-}
-
-.footnote-text {
-  @apply text-neutral-700 dark:text-neutral-300;
-  font-size: 0.9em;
-  line-height: 1.6;
-}
-
-.footnote-text p {
-  @apply m-0;
-}
-
-.footnote-text p:not(:last-child) {
-  @apply mb-2;
-}
-
-.footnote-back-link {
-  @apply text-blue-600 dark:text-blue-400 no-underline ml-2;
-  font-size: 0.875em;
-  font-weight: 500;
-  padding: 0.125em 0.25em;
-  border-radius: 0.25em;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.footnote-back-link:hover {
-  @apply bg-blue-50 dark:bg-blue-900/20;
-  text-decoration: none;
-  transform: translateX(-2px);
-}
-
-.footnote-back-link:focus {
-  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
-}
-
-.footnote-back-link:active {
-  transform: translateX(0);
-}
-
-.footnote-highlight {
-  @apply bg-yellow-200 dark:bg-yellow-800;
-  animation: footnote-highlight 2s ease-out;
-  border-radius: 0.25em;
-  padding: 0.25em;
-  margin: -0.25em;
-}
-
-.footnote-content-wrapper {
-  @apply relative;
-}
-
-.prose-content {
-  @apply mb-0;
-}
-
-.static-footnotes-wrapper {
-  @apply relative;
-}
-
-.content-with-footnotes {
-  @apply mb-0;
-}
-
-/* Scroll margin for footnote targets */
-[id^="footnote-"] {
-  scroll-margin-top: 2rem;
-}
-
-[id^="footnote-ref-"] {
-  scroll-margin-top: 2rem;
-}
-
-/* Ensure footnotes don't interfere with prose styling */
-.prose .footnote-ref {
-  color: inherit;
-}
-
-.prose .footnote-link {
-  color: rgb(37 99 235);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.dark .prose .footnote-link {
-  color: rgb(96 165 250);
-}
-
-.prose .footnotes-section {
-  color: inherit;
-  max-width: none;
-}
-
-.prose .footnotes-title {
-  color: inherit;
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.prose .footnote-definition {
-  color: inherit;
-  margin-bottom: 1rem;
-}
-
-.prose .footnote-number {
-  color: rgba(115, 115, 115, 0.8);
-}
-
-.dark .prose .footnote-number {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.prose .footnote-text {
-  color: inherit;
-  font-size: 0.9em;
-}
-
-.prose .footnote-back-link {
-  color: rgb(37 99 235);
-  text-decoration: none;
-}
-
-.dark .prose .footnote-back-link {
-  color: rgb(96 165 250);
 }
