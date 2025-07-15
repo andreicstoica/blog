@@ -1,7 +1,6 @@
 import "./global.css";
 import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
-import { GeistMono } from "geist/font/mono";
 import { Navbar } from "./components/nav";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -48,11 +47,7 @@ const cx = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={cx(ibmPlexSans.variable, GeistMono.variable)}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={cx(ibmPlexSans.variable)} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
