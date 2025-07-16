@@ -19,6 +19,9 @@ const navItems = {
   "https://x.com/andreistoica_": {
     name: "twitter",
   },
+  "https://github.com/andreicstoica": {
+    name: "github",
+  },
 };
 
 export function Navbar() {
